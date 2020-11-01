@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    tools:context="com.bankapp.ui.AddUserFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_user_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_name_textLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_name_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:minEms="15" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_account_number_textLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/account_number"
+            app:layout_constraintEnd_toEndOf="@+id/add_name_textLayout"
+            app:layout_constraintStart_toStartOf="@+id/add_name_textLayout"
+            app:layout_constraintTop_toBottomOf="@+id/add_name_textLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_account_number_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:minEms="15" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_account_type_textLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/account_type"
+            app:layout_constraintEnd_toEndOf="@+id/add_account_number_textLayout"
+            app:layout_constraintStart_toStartOf="@+id/add_account_number_textLayout"
+            app:layout_constraintTop_toBottomOf="@+id/add_account_number_textLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/add_account_type_autocompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:minEms="15"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_balance_textLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/balance"
+            app:layout_constraintEnd_toEndOf="@+id/add_account_type_textLayout"
+            app:layout_constraintStart_toStartOf="@+id/add_account_type_textLayout"
+            app:layout_constraintTop_toBottomOf="@+id/add_account_type_textLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_balance_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:minEms="15" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/add_addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:enabled="false"
+            android:text="@string/create"
+            app:layout_constraintEnd_toStartOf="@+id/add_cancelButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_balance_textLayout" />
+
+        <Button
+            android:id="@+id/add_cancelButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="@+id/add_addButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/add_addButton" />
+
+        <ProgressBar
+            android:id="@+id/add_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/add_addButton"
+            app:layout_constraintEnd_toEndOf="@+id/add_addButton"
+            app:layout_constraintStart_toStartOf="@+id/add_addButton"
+            app:layout_constraintTop_toTopOf="@+id/add_addButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+</layout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/home_fragment_destination">
+
+    <fragment
+        android:id="@+id/home_fragment_destination"
+        android:name="com.bankapp.ui.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_home_to_add_user"
+            app:destination="@id/add_user_fragment_destination"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/home_fragment_destination" />
+        <action
+            android:id="@+id/action_home_to_update_user"
+            app:destination="@id/update_user_fragment_destination"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/home_fragment_destination" />
+    </fragment>
+    <fragment
+        android:id="@+id/add_user_fragment_destination"
+        android:name="com.bankapp.ui.AddUserFragment"
+        android:label="AddUserFragment" />
+    <fragment
+        android:id="@+id/update_user_fragment_destination"
+        android:name="com.bankapp.ui.UpdateUserFragment"
+        android:label="UpdateUserFragment" >
+        <argument
+            android:name="accountNo"
+            app:argType="string"
+            />
+    </fragment>
+</navigation>

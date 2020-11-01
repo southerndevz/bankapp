@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="java.lang.String"
+            alias="string"/>
+        <variable
+            name="bankAccount"
+            type="com.bankapp.databinding.Account" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="4dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person"
+                app:layout_constraintBottom_toBottomOf="@+id/holder_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edit_account_person_button"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_account"
+                app:layout_constraintBottom_toBottomOf="@+id/holder_acc_no"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/holder_acc_no"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_credit_card"
+                app:layout_constraintBottom_toBottomOf="@+id/holder_account_type"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/holder_account_type"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/holder_name"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:text="@{bankAccount.name}"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/holder_acc_no"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@{bankAccount.accountNo}"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/holder_name" />
+
+            <TextView
+                android:id="@+id/holder_account_type"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@{bankAccount.acctType}"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/holder_balance"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/holder_acc_no" />
+
+            <TextView
+                android:id="@+id/holder_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{string.valueOf(bankAccount.balance)}"
+                app:layout_constraintBottom_toBottomOf="@+id/holder_acc_no"
+                app:layout_constraintEnd_toStartOf="@+id/delete_account_person"
+                app:layout_constraintStart_toEndOf="@+id/holder_acc_no"
+                app:layout_constraintTop_toTopOf="@+id/holder_acc_no" />
+
+            <ImageButton
+                android:id="@+id/edit_account_person_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/holder_name"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/delete_account_person"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf="@+id/holder_account_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_account_person_button"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
