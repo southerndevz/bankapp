@@ -89,7 +89,7 @@ class AccountRecyclerViewAdapter(
         }
     }
 
-    interface OnAccountButtonClicked { /** This interface will forward clicks from the Home Fragment which extend this interface.
+    interface OnAccountButtonClicked { /** This interface will forward clicks from the Display Accounts Fragment which extend this interface.
                                            The Fragment will be passed as the listener in this adapter's constructor, it will of course implement the functions below */
         fun onEditClick(accountNo: String, position: Int)
         fun onDeleteClick(accountNo: String, position: Int)
