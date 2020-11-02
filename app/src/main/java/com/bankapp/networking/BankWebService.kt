@@ -24,6 +24,7 @@ interface BankWebService {
     @DELETE(value = "/api/accounts/{accountNo}")
     suspend fun deleteAccount(@Path("accountNo") accountNo: String)
 
+    /** Invoking this interface creates its instance wired up with Retrofit */
     companion object{
         operator fun invoke(): BankWebService {
             return Retrofit.Builder()

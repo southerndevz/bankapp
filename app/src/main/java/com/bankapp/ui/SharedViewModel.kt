@@ -10,10 +10,11 @@ import com.bankapp.networking.ResultState
 import com.bankapp.networking.networkOperation
 import kotlinx.coroutines.launch
 
-class MainActivityViewModel : ViewModel() {
-    private val webService: BankWebService = BankWebService.invoke()
-    private val _fetchAccountsState: MutableLiveData<FetchAccountsState> = MutableLiveData()
-    val fetchAccountsState: LiveData<FetchAccountsState> get() = _fetchAccountsState
+class SharedViewModel : ViewModel() {
+
+    private val webService: BankWebService = BankWebService.invoke() /** Defines & creates the Retrofit web service (Requires Android v26 */
+    private val _fetchAccountListState: MutableLiveData<FetchAccountListState> = MutableLiveData()
+    val fetchAccountListState: LiveData<FetchAccountListState> get() = _fetchAccountListState
     private val _fetchAccountState: MutableLiveData<FetchAccountState> = MutableLiveData()
     val fetchAccountState: LiveData<FetchAccountState> get() = _fetchAccountState
     private val _createAccountsState: MutableLiveData<CreateAccountState> = MutableLiveData()
@@ -23,13 +24,17 @@ class MainActivityViewModel : ViewModel() {
     private val _deleteAccountState: MutableLiveData<DeleteAccountState> = MutableLiveData()
     val deleteAccountState: LiveData<DeleteAccountState> get() = _deleteAccountState
 
+    /** I will show this one example, all the others works similarly */
     fun getAllBankAccounts() {
-        viewModelScope.launch {
-            _fetchAccountsState.postValue(FetchAccountsState.Loading)
-            when (val accounts = networkOperation { webService.getAccounts() }) {
-                is ResultState.Error -> _fetchAccountsState.postValue(FetchAccountsState.Error)
-                is ResultState.Success<*> -> _fetchAccountsState.postValue(
-                    FetchAccountsState.ShowData(accounts.data)
+        viewModelScope.launch { /** The viewModel launches a coroutine */
+            _fetchAccountListState.postValue(FetchAccountListState.Loading) /** The loading state is set while it fetches data,
+                                                                           see the fragment that observes this property*/
+            when (val accounts = networkOperation { webService.getAccounts() }) { /** The fetch operation happens in the networkOperation { } function
+                                                                                       and the result, i.e. 'val accounts' is assigned and checked */
+                is ResultState.Error -> _fetchAccountListState.postValue(FetchAccountListState.Error)
+                is ResultState.Success<*> -> _fetchAccountListState.postValue(
+                    FetchAccountListState.ShowData(accounts.data) /** If it is successful it tells the observers of FetchAccountsState to Show the data
+                                                                    which must be cast as a List<Account> (See UIStates.kt) and observers*/
                 )
             }
         }
@@ -89,8 +94,8 @@ class MainActivityViewModel : ViewModel() {
         }
     }
 
-    fun setFetchAccountsState(state: FetchAccountsState){
-        _fetchAccountsState.postValue(state)
+    fun setFetchAccountsState(state: FetchAccountListState){
+        _fetchAccountListState.postValue(state)
     }
 
     fun setFetchAccountState(state: FetchAccountState){

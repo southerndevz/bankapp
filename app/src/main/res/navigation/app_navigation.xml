@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/home_fragment_destination"
-        android:name="com.bankapp.ui.HomeFragment"
+        android:name="com.bankapp.ui.DisplayAccountsFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_home_to_add_user"
@@ -29,11 +29,11 @@
     </fragment>
     <fragment
         android:id="@+id/add_user_fragment_destination"
-        android:name="com.bankapp.ui.AddUserFragment"
+        android:name="com.bankapp.ui.AddAccountFragment"
         android:label="AddUserFragment" />
     <fragment
         android:id="@+id/update_user_fragment_destination"
-        android:name="com.bankapp.ui.UpdateUserFragment"
+        android:name="com.bankapp.ui.UpdateAccountFragment"
         android:label="UpdateUserFragment" >
         <argument
             android:name="accountNo"

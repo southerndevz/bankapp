@@ -2,11 +2,15 @@ package com.bankapp.ui
 
 import com.bankapp.databinding.Account
 
-sealed class FetchAccountsState{
-    data class ShowData(val accounts: Any): FetchAccountsState()
-    object Idle: FetchAccountsState()
-    object Loading: FetchAccountsState()
-    object Error: FetchAccountsState()
+sealed class FetchAccountListState{
+    data class ShowData(val accounts: Any): FetchAccountListState() /** Unlike in other states the fetch of a List of Accounts
+                                                                     is still set as being of type Any,
+                                                                     the final conversion is done before the list is submitted
+                                                                     to the recyclerView adapter's submitList() function,
+                                                                     it is the cast to being a List<Account> */
+    object Idle: FetchAccountListState()
+    object Loading: FetchAccountListState()
+    object Error: FetchAccountListState()
 }
 
 sealed class FetchAccountState{

@@ -14,96 +14,110 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bankapp.R
 import com.bankapp.databinding.Account
 import com.bankapp.databinding.AccountRecyclerViewAdapter
-import com.bankapp.databinding.FragmentDisplayUsersBinding
+import com.bankapp.databinding.FragmentDisplayAccountsBinding
 import com.google.android.material.snackbar.Snackbar
 
-
 @Suppress("UNCHECKED_CAST")
-class HomeFragment : Fragment(), AccountRecyclerViewAdapter.OnAccountButtonClicked {
+class DisplayAccountsFragment : Fragment(), AccountRecyclerViewAdapter.OnAccountButtonClicked {
 
-    private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
-    private lateinit var binding: FragmentDisplayUsersBinding
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var binding: FragmentDisplayAccountsBinding
     private lateinit var recyclerViewAdapter: AccountRecyclerViewAdapter
 
     override fun onResume() {
         super.onResume()
-        mainActivityViewModel.getAllBankAccounts()
+        /** Whenever the fragment regains focus it makes a network request to refresh the list */
+        sharedViewModel.getAllBankAccounts()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_display_accounts, container, false)
+
+        /** This block initializes the toolbar's title and back arrow button */
         with((activity as AppCompatActivity).supportActionBar){
             this?.title = getString(R.string.app_name)
             this?.setDisplayHomeAsUpEnabled(false)
             this?.setDisplayShowHomeEnabled(false)
         }
-    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_display_users, container, false)
-        recyclerViewAdapter = AccountRecyclerViewAdapter(emptyList(), this, viewLifecycleOwner, mainActivityViewModel)
+        /** This block initializes the RecyclerView and it's adapter */
+        recyclerViewAdapter = AccountRecyclerViewAdapter(this, viewLifecycleOwner, sharedViewModel)
         with(binding.bankAccountsRecyclerView) {
             adapter = recyclerViewAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             onFlingListener = object : RecyclerView.OnFlingListener() {
                 override fun onFling(velocityX: Int, velocityY: Int): Boolean {
                     if(velocityY > velocityX) {
-                        mainActivityViewModel.getAllBankAccounts()
+                        /** This listener detects if you fling to navigate to the bottom and that calls the viewModel
+                            to refresh the list */
+                        sharedViewModel.getAllBankAccounts()
                     }
                     return false
                 }
-
             }
         }
-        mainActivityViewModel.fetchAccountsState.observe(viewLifecycleOwner, { state ->
+
+        /** Sets up the viewModel observers */
+        sharedViewModel.fetchAccountListState.observe(viewLifecycleOwner, { state ->
             when (state) {
-                is FetchAccountsState.ShowData -> {
+                is FetchAccountListState.ShowData -> {
                     binding.loadUsersProgressBar.visibility = View.INVISIBLE
                     recyclerViewAdapter.submitList(state.accounts as List<Account>)
                 }
-                is FetchAccountsState.Loading -> {
+                is FetchAccountListState.Loading -> {
                     if (recyclerViewAdapter.itemCount == 0){
                         binding.loadUsersProgressBar.visibility = View.VISIBLE
                     }
                 }
-                is FetchAccountsState.Idle -> Unit
-                is FetchAccountsState.Error -> {
+                is FetchAccountListState.Idle -> Unit
+                is FetchAccountListState.Error -> {
                     binding.loadUsersProgressBar.visibility = View.INVISIBLE
                     Snackbar.make(
                         binding.displayUsersRoot,
                         getString(R.string.could_not_refresh_list),
                         Snackbar.LENGTH_LONG
                     ).show()
-                    mainActivityViewModel.setDeleteAccountState(DeleteAccountState.Idle)
+                    sharedViewModel.setDeleteAccountState(DeleteAccountState.Idle)
                 }
             }
         })
 
-        mainActivityViewModel.deleteAccountState.observe(viewLifecycleOwner, { deleteAccountState ->
+        sharedViewModel.deleteAccountState.observe(viewLifecycleOwner, { deleteAccountState ->
             when (deleteAccountState) {
                 is DeleteAccountState.Error -> {
                     Snackbar.make(
                         binding.displayUsersRoot,
                         getString(R.string.could_not_delete_account),
                         Snackbar.LENGTH_LONG).show()
-                    mainActivityViewModel.setDeleteAccountState(DeleteAccountState.Idle)
+                    sharedViewModel.setDeleteAccountState(DeleteAccountState.Idle)
                 }
                 is DeleteAccountState.Idle -> Unit
                 is DeleteAccountState.ShowData -> {
                     if (this::recyclerViewAdapter.isInitialized) {
                         recyclerViewAdapter.removeDeletedAccount(deleteAccountState.position)
                     }
-                    mainActivityViewModel.setDeleteAccountState(DeleteAccountState.Idle)
+                    sharedViewModel.setDeleteAccountState(DeleteAccountState.Idle)
                 }
             }
         })
+
+        /** Sets up the floating action button listener */
         binding.floatingActionButton.setOnClickListener {
-           findNavController().navigate(HomeFragmentDirections.actionHomeToAddUser())
+           findNavController().navigate(DisplayAccountsFragmentDirections.actionHomeToAddUser())
         }
         return binding.root
     }
 
+    /** The following 'override functions' detect clicks on the edit/delete buttons of a RecyclerView item's .
+        This fragment implements the OnAccountButtonClicked of the AccountRecyclerViewAdapter,
+        and listens to those clicks.
+        It (this Fragment) is passed as the listener in the AccountRecyclerViewAdapter's constructor. */
+
     override fun onEditClick(accountNo: String, position: Int) {
-        findNavController().navigate(HomeFragmentDirections.actionHomeToUpdateUser(accountNo))
+        findNavController().navigate(DisplayAccountsFragmentDirections.actionHomeToUpdateUser(accountNo))
     }
 
     override fun onDeleteClick(accountNo: String, position: Int) {
-        mainActivityViewModel.delete(accountNo, position)
+        sharedViewModel.delete(accountNo, position)
     }
 }

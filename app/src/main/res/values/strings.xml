@@ -4,18 +4,18 @@
     <string name="account_number">Account Number</string>
     <string name="account_type">Account Type</string>
     <string name="balance">Balance</string>
-    <string name="add">Add</string>
     <string name="cancel">Cancel</string>
-    <string name="account_number_title">Account Number:</string>
     <string name="update">Update</string>
-    <string name="could_not_refresh_list">Could not refresh accounts. Check connection</string>
-    <string name="could_not_add_user">Could not add account</string>
-    <string name="user_added">Account added successfully</string>
-    <string name="user_updated">Account updated successfully</string>
+    <string name="account_number_title">Account Number:</string>
+    <string name="could_not_refresh_list">Could not fetch accounts</string>
+    <string name="could_not_update_account">Could not update account</string>
+    <string name="could_not_add_account">Could not add account</string>
+    <string name="account_created">Account created successfully</string>
+    <string name="account_updated">Account updated successfully</string>
     <string name="could_not_delete_account">Could not delete bank account</string>
-    <string name="could_not_fetch_user">Could not fetch account</string>
-    <string name="add_user">Add Account</string>
-    <string name="update_user">Update Account</string>
+    <string name="could_not_fetch_account">Could not fetch account</string>
+    <string name="add_account">Add Account</string>
+    <string name="update_account">Update Account</string>
     <string name="create">Create</string>
 
     <string-array name="account_type_array">

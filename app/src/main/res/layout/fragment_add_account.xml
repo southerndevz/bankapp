@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
-    tools:context="com.bankapp.ui.AddUserFragment">
+    tools:context="com.bankapp.ui.AddAccountFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/add_user_root"
+        android:id="@+id/add_account_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp">
@@ -95,7 +95,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/add_addButton"
+            android:id="@+id/add_createButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -112,10 +112,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
-            app:layout_constraintBottom_toBottomOf="@+id/add_addButton"
+            app:layout_constraintBottom_toBottomOf="@+id/add_createButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/add_addButton" />
+            app:layout_constraintStart_toEndOf="@+id/add_createButton" />
 
         <ProgressBar
             android:id="@+id/add_progressBar"
@@ -123,10 +123,10 @@
             android:layout_width="48dp"
             android:layout_height="0dp"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/add_addButton"
-            app:layout_constraintEnd_toEndOf="@+id/add_addButton"
-            app:layout_constraintStart_toStartOf="@+id/add_addButton"
-            app:layout_constraintTop_toTopOf="@+id/add_addButton" />
+            app:layout_constraintBottom_toBottomOf="@+id/add_createButton"
+            app:layout_constraintEnd_toEndOf="@+id/add_createButton"
+            app:layout_constraintStart_toStartOf="@+id/add_createButton"
+            app:layout_constraintTop_toTopOf="@+id/add_createButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 </layout>

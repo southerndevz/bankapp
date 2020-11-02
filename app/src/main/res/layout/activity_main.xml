@@ -29,7 +29,7 @@
         android:layout_height="match_parent"
         android:id="@+id/navHostFragment"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/app_nav"
+        app:navGraph="@navigation/app_navigation"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
 />
 

@@ -17,28 +17,28 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bankapp.R
 import com.bankapp.databinding.Account
-import com.bankapp.databinding.FragmentUpdateUserBinding
+import com.bankapp.databinding.FragmentUpdateAccountBinding
 import com.google.android.material.snackbar.Snackbar
 
 
-class UpdateUserFragment : Fragment() {
+class UpdateAccountFragment : Fragment() {
 
-    private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
-    private lateinit var binding: FragmentUpdateUserBinding
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var binding: FragmentUpdateAccountBinding
     private lateinit var textWatcher: TextWatcher
-    private val actionNavArgs: UpdateUserFragmentArgs by navArgs()
+    private val actionNavArgs: UpdateAccountFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_user, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_account, container, false)
         with((activity as AppCompatActivity).supportActionBar) {
-            this?.title = getString(R.string.update_user)
+            this?.title = getString(R.string.update_account)
             this?.setDisplayHomeAsUpEnabled(true)
             this?.setDisplayShowHomeEnabled(true)
         }
-        mainActivityViewModel.getBankAccount(actionNavArgs.accountNo)
+        sharedViewModel.getBankAccount(actionNavArgs.accountNo)
         with(binding) {
             with(updateAccountTypeAutocompleteTextView) {
                 setAdapter(
@@ -66,7 +66,7 @@ class UpdateUserFragment : Fragment() {
             updateAccountTypeAutocompleteTextView.addTextChangedListener(getTextWatcher())
             updateAccountNoTextView.addTextChangedListener(getTextWatcher())
             updateUpdateButton.setOnClickListener {
-                mainActivityViewModel.updateBankAccount(
+                sharedViewModel.updateBankAccount(
                     Account(
                         name = updateNameEditText.text.toString().trim(),
                         accountNo = updateAccountNoTextView.text.toString().trim(),
@@ -78,50 +78,50 @@ class UpdateUserFragment : Fragment() {
 
         }
 
-        mainActivityViewModel.updateAccountState.observe(viewLifecycleOwner, { state ->
+        sharedViewModel.updateAccountState.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is UpdateAccountState.Idle -> Unit
                 is UpdateAccountState.Loading -> accountUpdateLoading()
                 is UpdateAccountState.Error -> {
                     accountUpdateNotLoading()
                     Snackbar.make(
-                        binding.updateUserRoot,
-                        getString(R.string.could_not_add_user),
+                        binding.updateAccountRoot,
+                        getString(R.string.could_not_update_account),
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    mainActivityViewModel.setUpdateAccountState(UpdateAccountState.Idle)
+                    sharedViewModel.setUpdateAccountState(UpdateAccountState.Idle)
                 }
                 is UpdateAccountState.ShowData -> {
                     accountUpdateNotLoading()
                     findNavController().popBackStack()
                     binding.updateUpdateButton.isEnabled = false
                     Snackbar.make(
-                        binding.updateUserRoot,
-                        getString(R.string.user_updated),
+                        binding.updateAccountRoot,
+                        getString(R.string.account_updated),
                         Snackbar.LENGTH_SHORT
                     ).show()
-                    mainActivityViewModel.setUpdateAccountState(UpdateAccountState.Idle)
+                    sharedViewModel.setUpdateAccountState(UpdateAccountState.Idle)
                 }
             }
         })
 
-        mainActivityViewModel.fetchAccountState.observe(viewLifecycleOwner, { state ->
+        sharedViewModel.fetchAccountState.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is FetchAccountState.Idle -> Unit
                 is FetchAccountState.Loading -> accountFetchLoading()
                 is FetchAccountState.Error -> {
                     Snackbar.make(
-                        binding.updateUserRoot,
-                        getString(R.string.could_not_fetch_user),
+                        binding.updateAccountRoot,
+                        getString(R.string.could_not_fetch_account),
                         Snackbar.LENGTH_LONG
                     ).show()
-                    binding.loadUpdateUserProgressBar.visibility = INVISIBLE
-                    mainActivityViewModel.setFetchAccountState(FetchAccountState.Idle)
+                    binding.loadUpdateAccountProgressBar.visibility = INVISIBLE
+                    sharedViewModel.setFetchAccountState(FetchAccountState.Idle)
                 }
                 is FetchAccountState.ShowData -> {
                     accountFetchNotLoading()
                     binding.bankAccount = state.accounts
-                    mainActivityViewModel.setFetchAccountState(FetchAccountState.Idle)
+                    sharedViewModel.setFetchAccountState(FetchAccountState.Idle)
                 }
             }
         })
@@ -152,7 +152,7 @@ class UpdateUserFragment : Fragment() {
             updateAccountNoTextView.visibility = INVISIBLE
             updateAccountTypeTextLayout.visibility = INVISIBLE
             updateBalanceTextLayout.visibility = INVISIBLE
-            loadUpdateUserProgressBar.visibility = VISIBLE
+            loadUpdateAccountProgressBar.visibility = VISIBLE
         }
     }
 
@@ -164,7 +164,7 @@ class UpdateUserFragment : Fragment() {
             updateAccountNoTextView.visibility = VISIBLE
             updateAccountTypeTextLayout.visibility = VISIBLE
             updateBalanceTextLayout.visibility = VISIBLE
-            loadUpdateUserProgressBar.visibility = INVISIBLE
+            loadUpdateAccountProgressBar.visibility = INVISIBLE
         }
     }
 
