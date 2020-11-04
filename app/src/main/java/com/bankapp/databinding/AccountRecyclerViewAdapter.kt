@@ -84,7 +84,7 @@ class AccountRecyclerViewAdapter(
     fun submitList(newList: List<Account>) {
         if (!listOfAccounts.containsAll(newList)) {
             listOfAccounts = newList
-            notifyDataSetChanged() // We tell th
+            notifyDataSetChanged() /** This tells the RecyclerView adapter to refresh the displayed list if it is different from the previous one */
         }
     }
 
