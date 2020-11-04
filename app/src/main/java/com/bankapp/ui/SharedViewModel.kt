@@ -18,7 +18,7 @@ class SharedViewModel : ViewModel() {
     private val _fetchAccountState: MutableLiveData<FetchAccountState> = MutableLiveData()
     val fetchAccountState: LiveData<FetchAccountState> get() = _fetchAccountState
     private val _createAccountsState: MutableLiveData<CreateAccountState> = MutableLiveData()
-    val createAccountsState: LiveData<CreateAccountState> get() = _createAccountsState
+    val createAccountState: LiveData<CreateAccountState> get() = _createAccountsState
     private val _updateAccountState: MutableLiveData<UpdateAccountState> = MutableLiveData()
     val updateAccountState: LiveData<UpdateAccountState> get() = _updateAccountState
     private val _deleteAccountState: MutableLiveData<DeleteAccountState> = MutableLiveData()
@@ -27,14 +27,14 @@ class SharedViewModel : ViewModel() {
     /** I will show this one example, all the others works similarly */
     fun getAllBankAccounts() {
         viewModelScope.launch { /** The viewModel launches a coroutine */
-            _fetchAccountListState.postValue(FetchAccountListState.Loading) /** The loading state is set while it fetches data,
+            _fetchAccountListState.postValue(FetchAccountListState.Loading) /** The LiveData loading state is set to loading while it fetches data,
                                                                            see the fragment that observes this property*/
             when (val accounts = networkOperation { webService.getAccounts() }) { /** The fetch operation happens in the networkOperation { } function
                                                                                        and the result, i.e. 'val accounts' is assigned and checked */
                 is ResultState.Error -> _fetchAccountListState.postValue(FetchAccountListState.Error)
                 is ResultState.Success<*> -> _fetchAccountListState.postValue(
-                    FetchAccountListState.ShowData(accounts.data) /** If it is successful it tells the observers of FetchAccountsState to Show the data
-                                                                    which must be cast as a List<Account> (See UIStates.kt) and observers*/
+                    FetchAccountListState.ShowData(accounts.data) /** If it is successful it tells the LiveData observers of FetchAccountsState to Show the data
+                                                                    The data is later cast as a List<Account> (See UIStates.kt) */
                 )
             }
         }

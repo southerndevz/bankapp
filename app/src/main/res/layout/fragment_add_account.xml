@@ -2,6 +2,11 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="listener"
+            type="com.bankapp.ui.AddAccountFragment" />
+    </data>
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,6 +37,7 @@
                 android:id="@+id/add_name_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:onTextChangedValidation="@{listener.getTextWatcher()}"
                 android:inputType="textPersonName"
                 android:minEms="15" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -51,6 +57,7 @@
                 android:id="@+id/add_account_number_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:onTextChangedValidation="@{listener.getTextWatcher()}"
                 android:inputType="number"
                 android:minEms="15" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -72,6 +79,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:minEms="15"
+                app:onTextChangedValidation="@{listener.getTextWatcher()}"
+                app:onFocusChangedListener="@{true}"
+                app:accountsMenuAdapter="@{true}"
                 tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,6 +100,7 @@
                 android:id="@+id/add_balance_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:onTextChangedValidation="@{listener.getTextWatcher()}"
                 android:inputType="number"
                 android:minEms="15" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -101,6 +112,7 @@
             android:layout_marginTop="32dp"
             android:enabled="false"
             android:text="@string/create"
+            android:onClick="@{() -> listener.onCreateButtonClick()}"
             app:layout_constraintEnd_toStartOf="@+id/add_cancelButton"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
+            android:onClick="@{(button) -> listener.onCancelButtonClick(button)}"
             app:layout_constraintBottom_toBottomOf="@+id/add_createButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

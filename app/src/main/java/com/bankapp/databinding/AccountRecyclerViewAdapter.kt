@@ -24,6 +24,7 @@ class AccountRecyclerViewAdapter(
         RecyclerView.ViewHolder(recyclerViewItemBinding.root) {
 
         init {
+            recyclerViewItemBinding.listener = this
 
             /** Observing if delete is in progress so that the buttons can be disabled temporarily */
             sharedViewModel.deleteAccountState.observe(viewLifecycleOwner, { state ->
@@ -38,22 +39,20 @@ class AccountRecyclerViewAdapter(
                     }
                 }
             })
+        }
 
-            /** Providing an implementation of the item's update button click */
-            recyclerViewItemBinding.editAccountPersonButton.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    listener.onEditClick(listOfAccounts[adapterPosition].accountNo, adapterPosition)
-                }
+        fun onDeleteButtonClick(){
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                listener.onDeleteClick(
+                    listOfAccounts[adapterPosition].accountNo,
+                    adapterPosition
+                )
             }
+        }
 
-            /**  Providing an implementation of the item's delete button click */
-            recyclerViewItemBinding.deleteAccountPerson.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    listener.onDeleteClick(
-                        listOfAccounts[adapterPosition].accountNo,
-                        adapterPosition
-                    )
-                }
+        fun onEditButtonClick(){
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                listener.onEditClick(listOfAccounts[adapterPosition].accountNo, adapterPosition)
             }
         }
     }

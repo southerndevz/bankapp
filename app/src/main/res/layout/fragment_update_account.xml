@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data android:layout_height="match_parent">
 
-        <import type="android.widget.AutoCompleteTextView"
-alias="autoTextView"/>
+        <import
+            alias="autoTextView"
+            type="android.widget.AutoCompleteTextView" />
+
         <variable
             name="bankAccount"
             type="com.bankapp.databinding.Account" />
@@ -14,7 +16,12 @@ alias="autoTextView"/>
         <import
             alias="string"
             type="java.lang.String" />
+
+        <variable
+            name="listener"
+            type="com.bankapp.ui.UpdateAccountFragment" />
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,7 +78,8 @@ alias="autoTextView"/>
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:minEms="15"
-                    android:text="@{bankAccount.name}" />
+                    android:text="@{bankAccount.name}"
+                    app:onTextChangedValidation="@{listener.getTextWatcher()}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -93,6 +101,9 @@ alias="autoTextView"/>
                     android:inputType="none"
                     android:minEms="15"
                     android:text="@{bankAccount.acctType}"
+                    app:onFocusChangedListener="@{true}"
+                    app:accountsMenuAdapter="@{true}"
+                    app:onTextChangedValidation="@{listener.getTextWatcher()}"
                     tools:ignore="LabelFor" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +125,8 @@ alias="autoTextView"/>
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:minEms="15"
-                    android:text="@{string.valueOf(bankAccount.balance)}" />
+                    android:text="@{string.valueOf(bankAccount.balance)}"
+                    app:onTextChangedValidation="@{listener.getTextWatcher()}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -122,6 +134,7 @@ alias="autoTextView"/>
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:onClick="@{() -> listener.updateButtonClick()}"
                 android:text="@string/update"
                 app:layout_constraintEnd_toEndOf="@+id/update_name_textLayout"
                 app:layout_constraintStart_toStartOf="@+id/update_balance_textLayout"
