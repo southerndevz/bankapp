@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
 
-    private val webService: BankWebService = BankWebService.invoke() /** Defines & creates the Retrofit web service (Requires Android v26 */
+    private val webService: BankWebService = BankWebService.invoke() /** Defines & creates the Retrofit web service */
     private val _fetchAccountListState: MutableLiveData<FetchAccountListState> = MutableLiveData()
     val fetchAccountListState: LiveData<FetchAccountListState> get() = _fetchAccountListState
     private val _fetchAccountState: MutableLiveData<FetchAccountState> = MutableLiveData()
@@ -23,6 +23,7 @@ class SharedViewModel : ViewModel() {
     val updateAccountState: LiveData<UpdateAccountState> get() = _updateAccountState
     private val _deleteAccountState: MutableLiveData<DeleteAccountState> = MutableLiveData()
     val deleteAccountState: LiveData<DeleteAccountState> get() = _deleteAccountState
+
 
     /** I will show this one example, all the others works similarly */
     fun getAllBankAccounts() {
