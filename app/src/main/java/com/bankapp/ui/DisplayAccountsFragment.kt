@@ -61,8 +61,8 @@ class DisplayAccountsFragment : Fragment(), AccountRecyclerViewAdapter.OnAccount
         sharedViewModel.fetchAccountListState.observe(viewLifecycleOwner, { state ->
             when (state) {
                 is FetchAccountListState.ShowData -> {
-                    binding.loadUsersProgressBar.visibility = View.INVISIBLE
                     recyclerViewAdapter.submitList(state.accounts as List<Account>)
+                    binding.loadUsersProgressBar.visibility = View.INVISIBLE
                 }
                 is FetchAccountListState.Loading -> {
                     if (recyclerViewAdapter.itemCount == 0) {
@@ -71,12 +71,12 @@ class DisplayAccountsFragment : Fragment(), AccountRecyclerViewAdapter.OnAccount
                 }
                 is FetchAccountListState.Idle -> Unit
                 is FetchAccountListState.Error -> {
-                    binding.loadUsersProgressBar.visibility = View.INVISIBLE
                     Snackbar.make(
                         binding.displayUsersRoot,
                         getString(R.string.could_not_refresh_list),
                         Snackbar.LENGTH_LONG
                     ).show()
+                    binding.loadUsersProgressBar.visibility = View.INVISIBLE
                     sharedViewModel.setDeleteAccountState(DeleteAccountState.Idle)
                 }
             }
